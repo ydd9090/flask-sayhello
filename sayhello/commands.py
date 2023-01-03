@@ -31,3 +31,13 @@ def forge(count):
     click.echo(f"Created {count} fake message.")
 
 
+@app.cli.command()
+@click.option("--count",default=20,help="num of numbers.")
+def test_num(count):
+    nums = [0,1,2,3,4,5,6,7,8,9]
+    import random
+    for _ in range(count):
+        print(random.choice(nums),end="")
+    click.echo("\ndone.")
+
+
