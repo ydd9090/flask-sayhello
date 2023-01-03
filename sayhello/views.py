@@ -17,3 +17,7 @@ def index():
         return redirect(url_for("index"))
     return render_template("index.html",form=form,messages=messages)
 
+@app.route("/about")
+def about():
+    return render_template("about.html")
+
