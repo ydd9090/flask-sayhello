@@ -1,3 +1,4 @@
+{%from "bootstrap/nav.html" import render_nav_item %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,6 +10,20 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" type="text/css">
 </head>
 <body>
+{%block nav%}
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container">
+        <div class="collapse navbar-collapse" id="navabarColor01">
+            <ul class="navbar-nav mr-auto">
+                {{render_nav_item("index","Home")}}
+                {{render_nav_item("about","About")}}
+            </ul>
+        </div>
+    </div>
+
+</nav>
+{%endblock%}
+
 <main class="container">
     <header>
         <h1 class="text-center display-4">

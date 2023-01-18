@@ -1,26 +1,39 @@
-{% extends 'base_new.html' %}
+{% extends 'base.html' %}
 {% from 'bootstrap/form.html' import render_form %}
+{% from 'bootstrap/pagination.html' import render_pagination %}
 
 {% block content %}
     <div class="hello-form">
         {{ render_form(form, action=request.full_path) }}
     </div>
-    <h5>{{ messages|length }} messages
+    <h5>
+        <!-- {{ messages|length }} messages -->
+        {{message_count}} messages
         <small class="float-right">
             <a href="#bottom" title="Go Bottom">&darr;</a>
         </small>
     </h5>
     <div class="list-group">
         {% for message in messages %}
-            <a class="list-group-item list-group-item-action flex-column">
+        
+            <a class="list-group-item list-group-item-action flex-column" href="{{url_for('list',name=message.name)}}">
                 <div class="d-flex w-100 justify-content-between">
-                    <h5 class="mb-1 text-success">{{ message.name }}
+                    
+                    <h5 class="mb-1 text-success">
+                        <img src="{{url_for('get_avatar',filename=message.avatar_m)}}" class="avatar">
+                        {{ message.name }}
+                        <!-- <a href="{{url_for('list',name=message.name)}}" class="list-group-item list-group-item-action flex-column">{{ message.name }}</a> -->
                         <small class="text-muted"> #{{ loop.revindex }}</small>
                     </h5>
                     <small>{{ message.timestamp.strftime('%Y/%m/%d %H:%M') }}</small>
+                    
                 </div>
                 <p class="mb-1">{{ message.body }}</p>
             </a>
         {% endfor %}
+        {%if messages%}
+            {{render_pagination(pagination,align="center")}}
+        {%endif%}
+
     </div>
 {% endblock %}

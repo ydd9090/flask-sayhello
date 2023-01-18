@@ -41,3 +41,12 @@ header a {
 footer {
     margin: 20px;
 }
+
+.avatar-m {
+    width: 100px;
+    height: 100px;
+}
+
+.avatar {
+    width: 25px;
+}

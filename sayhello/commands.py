@@ -22,13 +22,13 @@ def forge(count):
     db.drop_all()
     db.create_all()
 
-    faker = Faker()
+    faker = Faker("zh_CN")
     click.echo("Working...")
     for i in range(count):
         message = Message(name=faker.name(),body = faker.sentence(),timestamp=faker.date_time_this_year())
         db.session.add(message)
     db.session.commit()
-    click.echo(f"Created {count} fake message.")
+    click.echo(f"Created {count} fake messages.")
 
 
 @app.cli.command()
