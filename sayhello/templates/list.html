@@ -10,20 +10,23 @@
             <a href="#bottom" title="Go Bottom">&darr;</a>
         </small>
     </h5>
+    
     <div class="list-group">
         {% for message in messages %}
         
             <a class="list-group-item list-group-item-action flex-column">
+
                 <div class="d-flex w-100 justify-content-between">
                     
                     <h5 class="mb-1 text-success">
-                        <img src="{{url_for('get_avatar',filename=message.avatar_m)}}" class="avatar">
+                        <img src="{{url_for('get_avatar',filename=message.avatar_m)}}" class="avatar" >
                         {{ message.name }}
                         <small class="text-muted"> #{{ loop.revindex }}</small>
                     </h5>
                     <small>{{ message.timestamp.strftime('%Y/%m/%d %H:%M') }}</small>
+                        
                 </div>
-                <p class="mb-1">{{ message.body }}</p>
+                    <pre class="mb-1">    {{ message.body }}</pre>
             </a>
         {% endfor %}
         {%if messages%}
