@@ -1,0 +1,9 @@
+{% extends "base.html"%}
+{% from "bootstrap/form.html" import render_form %}
+
+{%block content%} 
+    <div class="hello-form">
+        <h3 class="text-center text-muted sub-title">注  册</h3>
+        {{render_form(form)}}
+    </div>
+{%endblock%}

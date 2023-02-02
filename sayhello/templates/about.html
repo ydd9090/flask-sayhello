@@ -1,6 +1,9 @@
 {%extends "base.html"%}
 {%block title%}About{%endblock%}
 {%block content%}
-<h2>About Page</h2>
+<h2>Hello，{{user.username}}，这是你的个人介绍页面</h2>
+<h3>你一共发布了<a href="{{url_for('list',user_id=user.id)}}">{{user.messages | length}}</a>条信息！</h3>
+
+<p>{{user.description}}</p>
 
 {%endblock %}

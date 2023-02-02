@@ -3,9 +3,12 @@
 {% from 'bootstrap/pagination.html' import render_pagination %}
 
 {% block content %}
+    {%if current_user.is_authenticated %}
+
     <div class="hello-form">
         {{ render_form(form, action=request.full_path) }}
     </div>
+    {%endif%}
         <h5>
         <!-- {{ messages|length }} messages -->
             {{message_count}} messages
@@ -16,20 +19,58 @@
     <hr/>
     <div class="list-group">
         {% for message in messages %}
-        
-            <a class="list-group-item list-group-item-action flex-column" href="{{url_for('list',name=message.name)}}">
+            {%if message.user_id %}
+            <a class="list-group-item list-group-item-action flex-column" href="{{url_for('list',user_id=message.user_id)}}">
+            {%else%}
+            <a class="list-group-item list-group-item-action flex-column" >
+            {%endif%}
                 <div class="d-flex w-100 justify-content-between">
                     
                     <h5 class="mb-1 text-success">
                         <img src="{{url_for('get_avatar',filename=message.avatar_m)}}" class="avatar">
                         {{ message.name }}
-                        <!-- <a href="{{url_for('list',name=message.name)}}" class="list-group-item list-group-item-action flex-column">{{ message.name }}</a> -->
+                        <!-- <a href="" class="list-group-item list-group-item-action flex-column">{{ message.name }}</a> -->
                         <small class="text-muted"> #{{ loop.revindex }}</small>
                     </h5>
                     <small>{{ message.timestamp.strftime('%Y/%m/%d %H:%M') }}</small>
                     
                 </div>
                 <pre class="mb-1">    {{ message.body }}</pre>
+                {%if current_user.is_authenticated %}
+                <div class="float-right row">
+                        <form class="inline" method="post"
+                        action="/">
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                            <button type="submit" class="btn btn-outline-primary btn-sm">
+                            <span class="oi oi-star"></span> 点赞
+                            </button>
+                        </form>
+
+                    {%if current_user.is_admin%}
+                        <form class="inline" method="post"
+                        action="/">
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                            <button type="submit" class="btn btn-outline-primary btn-sm">
+                            <span class="oi oi-star"></span> 置顶
+                            </button>
+                        </form>
+                        <form class="inline" method="post"
+                        action="/">
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                            <button type="submit" class="btn btn-outline-primary btn-sm">
+                            <span class="oi oi-star"></span> 隐藏
+                            </button>
+                        </form>
+                        <form class="inline" method="post"
+                        action="/">
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                            <button type="submit" class="btn btn-outline-primary btn-sm">
+                            <span class="oi oi-star"></span> 删除
+                            </button>
+                        </form>
+                    {%endif%}
+                </div>
+                {%endif%}
             </a>
         {% endfor %}
         {%if messages%}

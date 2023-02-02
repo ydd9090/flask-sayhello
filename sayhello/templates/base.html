@@ -16,10 +16,18 @@
         <div class="collapse navbar-collapse" id="navabarColor01">
             <ul class="navbar-nav mr-auto">
                 {{render_nav_item("index","Home")}}
-                {{render_nav_item("about","About")}}
+                {%if current_user.is_authenticated%}
+                    {{render_nav_item("about","About")}}
+                    <a class="nav-item nav-link" href="/logout" onclick="return confirm('确定要退出登录吗')">Logout</a>
+                {%else%}
+                    {{render_nav_item("login","Login")}}
+                {%endif%}
+                
             </ul>
         </div>
+        
     </div>
+    
 
 </nav>
 {%endblock%}
@@ -48,10 +56,15 @@
         {% endblock %}
     </footer>
 </main>
-
+{%block script%}
 <script type="text/javascript" src="{{ url_for('static', filename='js/jquery-3.2.1.slim.min.js') }}"></script>
 <script type="text/javascript" src="{{ url_for('static', filename='js/popper.min.js') }}"></script>
 <script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
 <script type="text/javascript" src="{{ url_for('static', filename='js/script.js') }}"></script>
+<script type="text/javascript">
+    var csrf_token = "{{csrf_token()}}";
+</script>
+
+{%endblock%}
 </body>
 </html>

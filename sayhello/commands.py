@@ -1,5 +1,5 @@
 from sayhello import app,db
-from sayhello.models import Message
+from sayhello.models import Message,User
 import click
 
 
@@ -11,6 +11,10 @@ def initdb(drop):
         click.confirm('This operation will delete the database,do you want to continue?',abort=True)
         db.drop_all()
     db.create_all()
+    user = User(username="admin")
+    user.set_password("admin")
+    db.session.add(user)
+    db.session.commit()
     click.echo("Initialize database.")
 
 
@@ -19,13 +23,14 @@ def initdb(drop):
 def forge(count):
     """Generate fake messages."""
     from faker import Faker
-    db.drop_all()
+    # db.drop_all()
     db.create_all()
 
     faker = Faker("zh_CN")
     click.echo("Working...")
+    user = User.query.first()
     for i in range(count):
-        message = Message(name=faker.name(),body = faker.sentence(),timestamp=faker.date_time_this_year())
+        message = Message(name=faker.name(),body = faker.sentence(),timestamp=faker.date_time_this_year(),user=user)
         db.session.add(message)
     db.session.commit()
     click.echo(f"Created {count} fake messages.")

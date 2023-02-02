@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% from "bootstrap/form.html" import render_form%}
+
+{%block content%}
+<div class="hello-form">
+     <h3 class="text-center text-muted sub-title">登  录</h3>
+    {{ render_form(form, action=request.full_path) }}
+</div>
+<small> 
+    <a href="{{url_for('register')}}" title="注册入口">没有账号？请点击这里进行注册</a> 
+</small>
+
+{%endblock%}
